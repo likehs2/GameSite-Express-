@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Template</title>
+    <title>Tecnologias</title>
 </head>
 
 <body>
@@ -13,6 +13,19 @@
         </div>
     </div>
     <div class="divgeral">
+        <div class="cards">
+            <div class="divobjetivo">
+                <h1>TECNOLOGIAS</h1>
+                <a>Nesse site/projeto está sendo utilizado o Framework Express para desenvolvimento BackEnd, e HTML/CSS/JS para desenvolvimento FrontEnd.</a>
+                <br>
+                <h1>DEPENDÊNCIAS</h1>
+                <a>"dotenv": "^16.0.3",
+                    "express": "^4.18.2",
+                    "mustache-express": "^1.3.2",
+                    "nodemon": "^2.0.22"</a>
+                
+            </div>
+        </div>
 
     </div>
 </body>
@@ -45,6 +58,7 @@
         width: 100%;
         height: 100%;
     }
+
     .divpaginainicial {
         padding: 10px 10px 10px 10px;
         margin-top: 6px;
@@ -58,9 +72,34 @@
         box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.2);
     }
 
-    .divpaginainicial:hover{
+    .divpaginainicial:hover {
         transition: 0.5s;
         background-color: #50d0ff;
         color: black;
+    }
+
+    .cards {
+        display: flex;
+        width: 100%;
+
+    }
+
+    .divobjetivo {
+        padding: 5px 40px 50px 40px;
+        display: block;
+        background-color: #ffffff;
+        color: #19191a;
+        text-align: center;
+        width: 900px;
+
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        margin-bottom: auto;
+
+
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 8px 8px 8px rgb(0, 0, 0, 0.2);
     }
 </style>

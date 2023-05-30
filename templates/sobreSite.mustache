@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Template</title>
+    <title>Sobre o Site</title>
 </head>
 
 <body>
@@ -13,6 +13,44 @@
         </div>
     </div>
     <div class="divgeral">
+        <div class="cards">
+            <div class="divobjetivo">
+                <h1>OBJETIVO DO SITE</h1>
+                <a>O objetivo principal deste site é fornecer aos jogadores uma plataforma web para publicar avaliações,
+                    comentários, vídeos e fotos dos jogos, com a finalidade de auxiliar outros jogadores na decisão de
+                    comprar ou não um determinado jogo. Essa plataforma fornecerá alguns cartões com as capas dos jogos,
+                    e ao selecionar o cartão, será carregado o ambiente totalmente focado nesse jogo em específico.</a>
+                <br>
+                <h1>PROBLEMAS E PREMISSAS</h1>
+                <a>Com o crescimento do mercado de jogos eletronicos, a comunidade gamer tem se
+                    expandido cada vez mais, tendo em seu meio um publico interessado em compartilhar suas
+                    experiencias e opniões sobre os jogos. Com base nesse contexto, surge a ideia de criar um site
+                    colaborativo onde esses jogadores possam avaliar e comentar sobre os jogos que ja jogaram.
+                    O intuito desse site,  ́e auxiliar os novos jogadores na decisao de comprar ou nao
+                    determinado jogo a partir da experiencia compartilhada por outros jogadores. Esse site deve
+                    funcionar como base para uma comunidade gamer, onde os interessados poderao buscar ou
+                    compartilhar informações.
+                     É esperado que esse trabalho possa auxiliar em uma melhor experiencia para o jogador,
+                    diminuindo os casos de quebra de expectativa sobre determinado título</a>
+                <br>
+                <a>Nos tempos atuais, os jogadores estao enfrentando dificuldades em decidir se a compra
+                    de determinado jogo ́e um bom investimento, devido ao alto pre ̧co pelo qual est ̃ao sendo
+                    comercializados, alem de muitos jogadores possuirem orçamentos limitados para comprar seus
+                    jogos. O que faz com que eles escolham economizar a comprar um novo jogo.
+                    Os trailers e publicações de lançamento dos jogos nem sempre fornecem informações
+                    sufucientes para ajudar na decis ̃ao de compra, mesmo que voltado diretamente ao interesse do
+                    jogador, se faz necess ́ario a opnião de outros jogadores para auxiliar na decisão de compra do
+                    mesmo. ́E possível encontrar diversas avaliaçoes e opniões de outros jogadores na Internet,
+                    porém essas informações não estão centralizadas em um ́unico lugar, sendo necessário
+                    realizar varias pesquisas para obter essas informações.</a>
+                <h1>FUNCIONAMENTO</h1>
+                <a>O Site funciona em cima de HTML/CSS e JavaScript, junto ao Framework Express, que cuidará das funcionalidades e arquitetura Back-end do projeto.</a>
+                <br>
+                <a>Contará com uma tela de login, uma tela de Informações sobre o site, uma tela de infomrações sobre o Desenvolvedor, uma tela de Contato para envio de e-mails a equipe de
+                desenvolvimento, uma tela para cadastro de um determinado jogo, ai clicar em um card de determinado jogo, será carregado um ambiente dedicado a esse jogo.
+                Dentro desse ambiente será possivel fazer comentários e avaliações sobre o jogo em específico.</a>
+            </div>
+        </div>
 
     </div>
 </body>
@@ -45,6 +83,7 @@
         width: 100%;
         height: 100%;
     }
+
     .divpaginainicial {
         padding: 10px 10px 10px 10px;
         margin-top: 6px;
@@ -58,10 +97,34 @@
         box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.2);
     }
 
-    .divpaginainicial:hover{
+    .divpaginainicial:hover {
         transition: 0.5s;
         background-color: #50d0ff;
         color: black;
     }
 
+    .cards {
+        display: flex;
+        width: 100%;
+
+    }
+
+    .divobjetivo {
+        padding: 5px 40px 50px 40px;
+        display: block;
+        background-color: #ffffff;
+        color: #19191a;
+        text-align: center;
+        width: 900px;
+
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 100px;
+        margin-bottom: auto;
+
+
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 8px 8px 8px rgb(0, 0, 0, 0.2);
+    }
 </style>
