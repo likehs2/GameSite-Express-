@@ -5,6 +5,11 @@ const engine = mustacheExpress()
 const app = express()
 const path = require('path')
 
+/*IMPORTAÇÃO DO DOTENV 
+import * as dotenv from 'dotenv'
+dotenv.config()
+
+FINAL DA IMPORTAÇÃO DO DOTENV */
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -18,6 +23,9 @@ app.get('/', (req, res) =>{
     res.render("login");
 })
 
+app.get('/inicio', (req, res) =>{
+    res.render("login")
+})
 app.get('/conteudo', (req, res) =>{
     res.render("sobreSite");
 })
@@ -44,6 +52,10 @@ app.post('/sobreCriador', (req, res) =>{
 
 app.post('/contato', (req, res) =>{
     res.redirect('/contato');
+})
+
+app.post('/inicio', (req, res) =>{
+    res.redirect('/login');
 })
 
 
