@@ -1,7 +1,7 @@
 {
   "name": "projetoweb2",
   "version": "1.0.0",
-  "description": "",
+  "description": "Projeto Web2\r TCC1",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,6 +13,15 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mustache-express": "^1.3.2",
+    "nodemailer": "^6.9.3",
     "nodemon": "^2.0.22"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/likehs2/WEB2Projeto.git"
+  },
+  "bugs": {
+    "url": "https://github.com/likehs2/WEB2Projeto/issues"
+  },
+  "homepage": "https://github.com/likehs2/WEB2Projeto#readme"
 }

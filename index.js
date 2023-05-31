@@ -4,6 +4,7 @@ const mustacheExpress = require('mustache-express');
 const engine = mustacheExpress()
 const app = express()
 const path = require('path')
+const nodemailer = require('nodemailer')
 
 /*IMPORTAÇÃO DO DOTENV 
 import * as dotenv from 'dotenv'
@@ -20,6 +21,15 @@ app.engine(".mustache", engine);
 app.set("views", path.join(__dirname, "public/templates"));
 app.set("view engine", "mustache")
 
+const transport = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true, // true for 465, false for other ports
+    auth: {
+      user: "contato.spcegames@gmail.com", // generated ethereal user
+      pass: "jogodeahri123", // generated ethereal password
+    },
+  });
 
 app.get('/', (req, res) =>{
     res.render("login");
@@ -42,6 +52,30 @@ app.get('/sobreCriador', (req, res) =>{
 
 app.get('/contato', (req, res) =>{
     res.render("contato");
+})
+
+app.post('/enviaemail', (req, res) =>{
+
+    const { name, email, _subject, message } = req.body;
+
+    // Configuração do e-mail a ser enviado
+    const mailOptions = {
+      from: 'contato.spcegames@gmail.com',
+      to: 'sfcvinicius@hotmail.com',
+      subject: _subject,
+      text: `Nome: ${name}\nEmail: ${email}\nMensagem: ${message}`
+    };
+  
+    // Envio do e-mail
+    transport.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
+        res.status(500).send('Erro ao enviar o e-mail');
+      } else {
+        console.log('E-mail enviado: ' + info.response);
+        res.send('E-mail enviado com sucesso');
+      }
+    });
 })
 
 app.post('/tecnologia', (req, res) =>{
