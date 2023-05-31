@@ -5,15 +5,22 @@ const engine = mustacheExpress()
 const app = express()
 const path = require('path')
 const nodemailer = require('nodemailer')
+const dotenv = require('dotenv')
+const mongoose = require('mongoose')
 
-/*IMPORTAÇÃO DO DOTENV 
-import * as dotenv from 'dotenv'
+
+
+/*IMPORTAÇÃO DO DOTENV*/ 
 dotenv.config()
 
-FINAL DA IMPORTAÇÃO DO DOTENV */
+/*FINAL DA IMPORTAÇÃO DO DOTENV */
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+app.use(express.urlencoded({extended: true}));
+app.use(express.json());
 
 app.use(express.static(path.join(__dirname,"public")))// Para funcionar as tags img
 
@@ -21,13 +28,17 @@ app.engine(".mustache", engine);
 app.set("views", path.join(__dirname, "public/templates"));
 app.set("view engine", "mustache")
 
+
+const usersRoutes = require('./routes/usersRoutes')//Definindo o caminho da API
+app.use('/users', usersRoutes)//Definindo o caminho da API
+
 const transport = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
     port: 587,
-    secure: false, // true for 465, false for other ports
+    secure: false,
     auth: {
-      user: "contato.spcegames@outlook.com", // generated ethereal user
-      pass: "jogodeahri123", // generated ethereal password
+      user: process.env.MAIL_USER, 
+      pass: process.env.MAIL_PASS, 
     },
     tls: {
         rejectUnauthorized: false
@@ -98,6 +109,11 @@ app.post('/inicio', (req, res) =>{
 })
 
 
-app.listen(3000, () =>{
-    console.log('Servidor iniciado...')
+mongoose.connect('mongodb+srv://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'.9n6lkdw.mongodb.net/'+process.env.DB_NAME+'?retryWrites=true&w=majority')
+.then(() =>{
+    console.log("Conectado ao mongo")
+    app.listen(3000, () =>{
+        console.log('Servidor iniciado...')
+    })
 })
+.catch((err) => console.log(err))
