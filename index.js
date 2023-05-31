@@ -22,13 +22,16 @@ app.set("views", path.join(__dirname, "public/templates"));
 app.set("view engine", "mustache")
 
 const transport = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true, // true for 465, false for other ports
+    host: "smtp-mail.outlook.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
     auth: {
-      user: "contato.spcegames@gmail.com", // generated ethereal user
+      user: "contato.spcegames@outlook.com", // generated ethereal user
       pass: "jogodeahri123", // generated ethereal password
     },
+    tls: {
+        rejectUnauthorized: false
+      }
   });
 
 app.get('/', (req, res) =>{
@@ -60,8 +63,8 @@ app.post('/enviaemail', (req, res) =>{
 
     // Configuração do e-mail a ser enviado
     const mailOptions = {
-      from: 'contato.spcegames@gmail.com',
-      to: 'sfcvinicius@hotmail.com',
+      from: 'contato.spcegames@outlook.com',
+      to: 'contato.spcegames@outlook.com',
       subject: _subject,
       text: `Nome: ${name}\nEmail: ${email}\nMensagem: ${message}`
     };
