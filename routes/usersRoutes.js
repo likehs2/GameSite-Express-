@@ -2,7 +2,7 @@ const router = require('express').Router()
 const Users = require('../models/Users')
 
 router.post('/', async (req, res) =>{
-    const {name_user, pass_user, email_user, adm_user} = req.body
+    const {name_user, pass_user, email_user} = req.body
 
     if(!name_user){
         res.status(422).json({ error: 'o nome é obrigatorio' })
@@ -12,7 +12,7 @@ router.post('/', async (req, res) =>{
         name_user,
         pass_user,
         email_user,
-        adm_user
+        adm_user: false
     }
 
     try{

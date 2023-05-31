@@ -39,23 +39,23 @@
                 <br>
                 <a href="">Esqueci a senha</a>
             </form>
-            <form class="formularioCadastro">
+            <form class="formularioCadastro" action="/users" method="POST">
                 <h1> CADASTRO </h1>
                 <label>Usuario/Nickname:</label>
                 <br>
-                <input>
+                <input type="text" name="name_user">
                 <br>
                 <label>E-mail:</label>
                 <br>
-                <input>
+                <input type="email" name="email_user">
                 <br>
                 <label>Senha:</label>
                 <br>
-                <input type="password">
+                <input type="password"  name="pass_user">
                 <br>
                 <label>Confirmação de Senha:</label>
                 <br>
-                <input type="password">
+                <input type="password" name="confirm_pass">
                 <br>
                 <button type="submit">Cadastrar</button>
             </form>

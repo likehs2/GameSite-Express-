@@ -32,6 +32,7 @@ app.set("view engine", "mustache")
 const usersRoutes = require('./routes/usersRoutes')//Definindo o caminho da API
 app.use('/users', usersRoutes)//Definindo o caminho da API
 
+
 const transport = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
     port: 587,
@@ -110,6 +111,7 @@ app.post('/inicio', (req, res) =>{
 
 
 mongoose.connect('mongodb+srv://'+process.env.DB_USER+':'+process.env.DB_PASS+'@'+process.env.DB_HOST+'.9n6lkdw.mongodb.net/'+process.env.DB_NAME+'?retryWrites=true&w=majority')
+
 .then(() =>{
     console.log("Conectado ao mongo")
     app.listen(3000, () =>{
