@@ -8,6 +8,12 @@ router.post('/', async (req, res) =>{
         res.status(422).json({ error: 'o nome é obrigatorio' })
     }
 
+    const existingUser = await Users.findOne({ name_user });
+
+    if (existingUser) {
+        return res.status(422).json({ error: 'O nome de usuário já está em uso' });
+    }
+
     const users = {
         name_user,
         pass_user,
@@ -93,5 +99,28 @@ router.delete('/:id', async (req, res) =>{
     }
 
 })
+
+router.post('/login', async (req, res) => {
+    const { name_user_login, pass_user_login } = req.body;
+
+    try {
+        // Verifica se o usuário existe no banco de dados
+        const user = await Users.findOne({ name_user: name_user_login });
+
+        if (!user) {
+            return res.status(401).json({ error: 'Usuário não encontrado' });
+        }
+
+        // Verifica se a senha está correta
+        if (pass_user_login !== user.pass_user) {
+            return res.status(401).json({ error: 'Senha incorreta' });
+        }
+
+        // Login bem-sucedido
+        res.status(200).json({ message: 'Login realizado com sucesso' });
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao realizar o login' });
+    }
+});
 
 module.exports = router

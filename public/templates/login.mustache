@@ -24,22 +24,22 @@
         </div>
         <div class="formulario">
             <img src="/imagens/logosite.png" style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
-            <form class="formulariologin">
+            <form class="formulariologin" action="/users/login" method="POST">
                 <h1> LOGIN </h1>
 
                 <label>Usuario:</label>
                 <br>
-                <input>
+                <input type="text" name="name_user_login">
                 <br>
                 <label>Senha:</label>
                 <br>
-                <input type="password">
+                <input type="password"  name="pass_user_login">
                 <br>
                 <button type="submit">Entrar</button>
                 <br>
                 <a href="">Esqueci a senha</a>
             </form>
-            <form class="formularioCadastro" action="/users" method="POST">
+            <form class="formularioCadastro" action="/users" method="POST" onsubmit="return validarSenha()">
                 <h1> CADASTRO </h1>
                 <label>Usuario/Nickname:</label>
                 <br>
@@ -73,6 +73,21 @@
 </body>
 
 </html>
+
+<script>
+    function validarSenha() {
+        var senha = document.getElementsByName('pass_user')[0].value;
+        var confirmSenha = document.getElementsByName('confirm_pass')[0].value;
+
+        if (senha !== confirmSenha) {
+            console.log(senha)
+            console.log(confirmSenha)
+            alert("A senha e a confirmação de senha não são iguais");
+            return false; // impede o envio do formulário
+        }
+        return true; // permite o envio do formulário
+    }
+</script>
 
 <style>
     body {
