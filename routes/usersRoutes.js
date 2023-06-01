@@ -117,7 +117,8 @@ router.post('/login', async (req, res) => {
         }
 
         // Login bem-sucedido
-        res.status(200).json({ message: 'Login realizado com sucesso' });
+        res.status(200).redirect('/menucards');
+        
     } catch (error) {
         res.status(500).json({ error: 'Erro ao realizar o login' });
     }

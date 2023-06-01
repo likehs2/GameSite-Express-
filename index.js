@@ -47,7 +47,11 @@ const transport = nodemailer.createTransport({
   });
 
 app.get('/', (req, res) =>{
-    res.render("login");
+    res.render("menucards");
+})
+
+app.get('/menucards', (req, res) =>{
+    res.render("menucards");
 })
 
 app.get('/inicio', (req, res) =>{
@@ -68,6 +72,7 @@ app.get('/sobreCriador', (req, res) =>{
 app.get('/contato', (req, res) =>{
     res.render("contato");
 })
+
 
 app.post('/enviaemail', (req, res) =>{
 
@@ -95,6 +100,10 @@ app.post('/enviaemail', (req, res) =>{
 
 app.post('/tecnologia', (req, res) =>{
     res.redirect('/tecnologias');
+})
+
+app.post('/menucards', (req, res) =>{
+    res.redirect('/menucards');
 })
 
 app.post('/sobreCriador', (req, res) =>{
