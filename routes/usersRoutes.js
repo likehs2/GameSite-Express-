@@ -1,5 +1,20 @@
 const router = require('express').Router()
 const Users = require('../models/Users')
+const cookieParse = require('cookie-parser')
+const session = require('express-session')
+const jwt = require('jsonwebtoken')
+
+router.use(cookieParse())
+router.use(
+  session({
+    secret: 'segredo-da-sessao',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 10 * 60 * 1000, // min x seg x mls
+    },
+  })
+)
 
 router.post('/', async (req, res) =>{
     const {name_user, pass_user, email_user} = req.body
@@ -117,7 +132,10 @@ router.post('/login', async (req, res) => {
         }
 
         // Login bem-sucedido
-        res.status(200).json({ message: 'Login realizado com sucesso' });
+        req.session.name_user_login = name_user_login // salva o login na sessão
+        req.session.pass_user_login = pass_user_login // salva o login na sessão
+        
+        res.status(200).redirect('/colecao');
     } catch (error) {
         res.status(500).json({ error: 'Erro ao realizar o login' });
     }

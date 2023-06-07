@@ -7,6 +7,21 @@ const path = require('path')
 const nodemailer = require('nodemailer')
 const dotenv = require('dotenv')
 const mongoose = require('mongoose')
+const cookieParse = require('cookie-parser')
+const session = require('express-session')
+const jwt = require('jsonwebtoken')
+
+app.use(cookieParse())
+app.use(
+  session({
+    secret: 'segredo-da-sessao',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 10 * 60 * 1000, // min x seg x mls
+    },
+  })
+)
 
 
 
@@ -14,6 +29,7 @@ const mongoose = require('mongoose')
 dotenv.config()
 
 /*FINAL DA IMPORTAÇÃO DO DOTENV */
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -47,7 +63,18 @@ const transport = nodemailer.createTransport({
   });
 
 app.get('/', (req, res) =>{
-    res.render("login");
+    const pass_user_login = "Login"
+    res.render("inicio", {pass_user_login: pass_user_login});
+})
+
+app.get('/colecao', (req, res) =>{
+    let pass_user_login
+    if(req.session.name_user_login){
+       pass_user_login = req.session.name_user_login
+    }else{
+        pass_user_login = "Login";
+    }
+    res.render("inicio", {pass_user_login: pass_user_login});
 })
 
 app.get('/inicio', (req, res) =>{
