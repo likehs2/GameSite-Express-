@@ -12,16 +12,65 @@
             <a href='/inicio'>{{pass_user_login}}</a>
         </div>
     </div>
+    <img src="../imagens/logosite.png"
+        style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
+    <form action="/cadastrarColecao" method="post">
+        <button id="criarDivBtn">Cadastrar Jogo</button>
+
+    </form>
     <div class="divgeral">
-        <img src="../imagens/logosite.png" style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
+
+        <div id="cards"></div>
     </div>
 </body>
+<script>
+    console.log("ola")
+    const w = document.getElementById('cards');
+
+    async function preencherItens() {
+        try {
+            console.log("passou do ponto 0")
+            const response = await fetch('/colecao');
+            console.log("passou do ponto 1")
+            if (!response.ok) {
+                throw new Error('Erro ao obter os itens do banco de dados');
+                console.log("passou do ponto 2")
+            }
+
+            const itens = await response.json();
+            console.log(itens)
+            console.log("passou do ponto 3")
+            const itensHTML = itens.map(item => {
+                const name_colecao = item.name_colecao;
+                const img_colecao = item.img_colecao; 
+                return `
+                <div style="width: 184px; height: 229px; margin-right: 10px; margin-left: 10px; margin-bottom: 30px; margin-top: 30px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); text-align: center; color: white;">
+                    <a href = ''><img src="${img_colecao}" alt="${name_colecao}" style="width: 184px; height: 229px; transition: width 0.5s, height 0.5s;"></a>
+                    <h3>${name_colecao}</h3>
+                </div>
+  `;
+            }).join('');
+
+            w.style.display = 'flex';
+            w.style.flexWrap = 'wrap';
+            w.style.justifyContent = 'flex-start'; 
+            w.style.gap = '10px';
+            w.style.display = 'flex';
+            w.innerHTML = itensHTML;
+        } catch (error) {
+            console.error('Erro ao obter os itens do banco de dados:', error);
+        }
+    }
+
+    preencherItens();
+
+</script>
 
 </html>
 
 <style>
     body {
-        /*background-color: #f1f1f1;*/
+
         background-image: url('../imagens/retro.gif');
         background-repeat: repeat;
         background-size: cover;
@@ -43,6 +92,7 @@
     }
 
     .divgeral {
+        display: flex;
         width: 100%;
         height: 100%;
     }
@@ -60,10 +110,28 @@
         box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.2);
     }
 
-    .divpaginainicial:hover{
+    .divpaginainicial:hover {
         transition: 0.5s;
         background-color: #50d0ff;
         color: black;
     }
 
+    #criarDivBtn {
+
+        display: block;
+        margin-left: auto;
+        margin-right: 5%;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        background-color: #FFA500;
+        border: 2px solid #8b5b02;
+        border-radius: 6px;
+        height: 35px;
+    }
+
+    #criarDivBtn:hover {
+        background-color: #fcc96a;
+        color: rgb(58, 58, 58);
+        transition: 0.5s;
+    }
 </style>

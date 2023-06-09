@@ -48,6 +48,8 @@ app.set("view engine", "mustache")
 const usersRoutes = require('./routes/usersRoutes')//Definindo o caminho da API
 app.use('/users', usersRoutes)//Definindo o caminho da API
 
+const colecaoRoutes = require('./routes/colecaoRoutes')//Definindo o caminho da API
+app.use('/colecao', colecaoRoutes)//Definindo o caminho da API
 
 const transport = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
@@ -63,11 +65,11 @@ const transport = nodemailer.createTransport({
   });
 
 app.get('/', (req, res) =>{
-    const pass_user_login = "Login"
-    res.render("inicio", {pass_user_login: pass_user_login});
+    
+    res.render("login");
 })
 
-app.get('/colecao', (req, res) =>{
+app.get('/cards', (req, res) =>{
     let pass_user_login
     if(req.session.name_user_login){
        pass_user_login = req.session.name_user_login
@@ -96,6 +98,10 @@ app.get('/contato', (req, res) =>{
     res.render("contato");
 })
 
+app.get('/cadastrarColecao', (req, res) =>{
+  res.render("cadastrarColecao");
+})
+
 app.post('/enviaemail', (req, res) =>{
 
     const { name, email, _subject, message } = req.body;
@@ -122,6 +128,10 @@ app.post('/enviaemail', (req, res) =>{
 
 app.post('/tecnologia', (req, res) =>{
     res.redirect('/tecnologias');
+})
+
+app.post('/cadastrarColecao', (req, res) =>{
+  res.redirect('/cadastrarColecao');
 })
 
 app.post('/sobreCriador', (req, res) =>{

@@ -15,6 +15,7 @@ router.use(
     },
   })
 )
+  
 
 router.post('/', async (req, res) =>{
     const {name_user, pass_user, email_user} = req.body
@@ -132,13 +133,16 @@ router.post('/login', async (req, res) => {
         }
 
         // Login bem-sucedido
-        req.session.name_user_login = name_user_login // salva o login na sessão
-        req.session.pass_user_login = pass_user_login // salva o login na sessão
+        req.session.name_user_login = name_user_login 
+        req.session.pass_user_login = pass_user_login 
         
-        res.status(200).redirect('/colecao');
+        res.status(200).redirect('/cards');
     } catch (error) {
         res.status(500).json({ error: 'Erro ao realizar o login' });
     }
 });
+
+
+
 
 module.exports = router
