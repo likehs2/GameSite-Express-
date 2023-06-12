@@ -38,18 +38,21 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname,"public")))// Para funcionar as tags img
+app.use(express.static(path.join(__dirname,"public")))
 
 app.engine(".mustache", engine);
 app.set("views", path.join(__dirname, "public/templates"));
 app.set("view engine", "mustache")
 
 
-const usersRoutes = require('./routes/usersRoutes')//Definindo o caminho da API
-app.use('/users', usersRoutes)//Definindo o caminho da API
+const usersRoutes = require('./routes/usersRoutes')
+app.use('/users', usersRoutes)
 
-const colecaoRoutes = require('./routes/colecaoRoutes')//Definindo o caminho da API
-app.use('/colecao', colecaoRoutes)//Definindo o caminho da API
+const colecaoRoutes = require('./routes/colecaoRoutes')
+app.use('/colecao', colecaoRoutes)
+
+const avaliacaoRoutes = require('./routes/avaliacaoRoutes')
+app.use('/avaliacao', avaliacaoRoutes)
 
 const transport = nodemailer.createTransport({
     host: "smtp-mail.outlook.com",
@@ -102,6 +105,18 @@ app.get('/cadastrarColecao', (req, res) =>{
   res.render("cadastrarColecao");
 })
 
+app.get('/telaAvaliacao', (req, res) =>{
+  let pass_user_login
+    if(req.session.name_user_login){
+       pass_user_login = req.session.name_user_login
+    }else{
+        pass_user_login = "Login";
+    }
+  const name = req.query.name_colecao1; 
+  const image = req.query.img_colecao1;
+  res.render("telaAvaliacao", {name: name, image: image, pass_user_login: pass_user_login});
+})
+
 app.post('/enviaemail', (req, res) =>{
 
     const { name, email, _subject, message } = req.body;
@@ -128,6 +143,10 @@ app.post('/enviaemail', (req, res) =>{
 
 app.post('/tecnologia', (req, res) =>{
     res.redirect('/tecnologias');
+})
+
+app.post('/telaAvaliacao', (req, res) =>{
+  res.redirect('/telaAvaliacao');
 })
 
 app.post('/cadastrarColecao', (req, res) =>{
