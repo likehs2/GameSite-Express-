@@ -117,6 +117,19 @@ app.get('/telaAvaliacao', (req, res) =>{
   res.render("telaAvaliacao", {name: name, image: image, pass_user_login: pass_user_login});
 })
 
+app.get('/telaAtualizaAvaliacao', (req, res) =>{
+  let pass_user_login
+    if(req.session.name_user_login){
+       pass_user_login = req.session.name_user_login
+    }else{
+        pass_user_login = "Login";
+    }
+  const name_avaliacao = req.query.name_avaliacao; 
+  const mensagem_avaliacao = req.query.mensagem_avaliacao;
+  const _id = req.query._id;
+  res.render("telaAtualizaAvaliacao", {name_avaliacao: name_avaliacao, mensagem_avaliacao: mensagem_avaliacao, _id: _id, pass_user_login: pass_user_login});
+})
+
 app.post('/enviaemail', (req, res) =>{
 
     const { name, email, _subject, message } = req.body;
@@ -147,6 +160,10 @@ app.post('/tecnologia', (req, res) =>{
 
 app.post('/telaAvaliacao', (req, res) =>{
   res.redirect('/telaAvaliacao');
+})
+
+app.post('/telaAtualizaAvaliacao', (req, res) =>{
+  res.redirect('/telaAtualizaAvaliacao');
 })
 
 app.post('/cadastrarColecao', (req, res) =>{

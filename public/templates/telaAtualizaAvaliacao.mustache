@@ -16,82 +16,22 @@
         style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
     <div class="divgeral">
         <div class="cards">
-            <div class="dadosjogo">
-                <img src="{{image}}">
-                <h1>{{name}}</h1>
-            </div>
             <div class="mensagensjogo">
-                <form action="/avaliacao" method="post">
-                    <h3>Deixe sua mensagem:</h3>
-                    <input type="hidden" name="jogo_avaliacao" value="{{name}}">
-                    <input type="hidden" name="name_avaliacao" value="{{pass_user_login}}">
+                <form action="/avaliacao/atualiza/{{_id}}" method="post">
+                    <h3>Atualize sua mensagem:</h3>
                     <br>
-                    <textarea name="mensagem_avaliacao"></textarea>
+                    <textarea name="mensagem_avaliacao">{{mensagem_avaliacao}}</textarea>
                     <br>
                     <button>Enviar</button>
                 </form>
             </div>
         </div>
     </div>
-    <div class="divgeral">
-        <div class="mensagens">
-            <h1>Comentários</h1>
-            <div id="cards"></div>
-        </div>
-    </div>
-    
+    <script>
+        console.log("{{_id}}")
+    </script>
     
 </body>
-<script>
-    console.log("ola")
-    const z = document.getElementById('cards');
-
-    async function preencherItens() {
-        try {
-            console.log("passou do ponto 0")
-            const response = await fetch('/avaliacao/avalia/{{name}}');
-            console.log("passou do ponto 1")
-            if (!response.ok) {
-                throw new Error('Erro ao obter os itens do banco de dados');
-                console.log("passou do ponto 2")
-            }
-
-            const itens = await response.json();
-            console.log(itens)
-            console.log(itens.name_avaliacao)
-            console.log("passou do ponto 3")
-            const itensHTML = itens.map(item => {
-                console.log("Passou do ponto 4")
-                const name_avaliacao = item.name_avaliacao;
-                const mensagem_avaliacao = item.mensagem_avaliacao;
-                const _id = item._id;
-                let actionsHTML = '';
-                console.log("{{pass_user_login}}")    
-                if("{{pass_user_login}}" === name_avaliacao){
-                    actionsHTML = `
-                        <br>
-                        <a href="/avaliacao/deletar/${_id}">Deletar</a>
-                        <a href="/telaAtualizaAvaliacao?name_avaliacao=${name_avaliacao}&mensagem_avaliacao=${mensagem_avaliacao}&_id=${_id}">Editar</a>
-                    `;
-                }
-                return `
-                    <div style="width: 400px; height: auto; margin-top: 30px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); color: white; display: block;margin-left: auto; margin-right: auto; background-color: #0d1c2b; word-wrap: break-word;">
-                        <h3>${name_avaliacao}</h3>
-                        <a>${mensagem_avaliacao}</a>
-                        ${actionsHTML}
-                    </div>
-      `;
-            }).join('');
-            z.innerHTML = itensHTML;
-        } catch (error) {
-            console.error('Erro ao obter os itens do banco de dados:', error);
-        }
-    }
-
-    preencherItens();
-
-</script>
-
 </html>
 
 <style>
@@ -211,7 +151,7 @@
         
 
         margin-top: 100px;
-        margin-bottom: 30px;
+        margin-bottom: auto;
         margin-left: auto;
         margin-right: auto;
 
