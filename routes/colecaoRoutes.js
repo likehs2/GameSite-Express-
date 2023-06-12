@@ -79,6 +79,26 @@ routerColecao.patch('/:id', async (req, res) =>{
     }
 })
 
+routerColecao.post('/atualiza/:id', async (req, res) =>{
+    const id = req.params.id
+    const {name_colecao, img_colecao} = req.body
+
+
+    const colecao = {
+        name_colecao,
+        img_colecao,
+    }
+
+    try {
+        const updateColecao = await Colecao.updateOne({ _id: id }, colecao)
+
+        res.status(200).redirect('/cards')
+        
+    } catch (error) {
+        res.status(500).json({ error: error})
+    }
+})
+
 routerColecao.delete('/:id', async (req, res) =>{
     const id = req.params.id
 
@@ -92,6 +112,25 @@ routerColecao.delete('/:id', async (req, res) =>{
         await Colecao.deleteOne({_id: id})
 
         res.status(200).json({ message: 'Usuário removido com sucesso' })
+    }catch(error){
+        res.status(500).json({ error: error })
+    }
+
+})
+
+routerColecao.get('/deletar/:id', async (req, res) =>{
+    const id = req.params.id
+
+    const usuarios = await Colecao.findOne({ _id: id })
+    if(!usuarios){
+        res.status(422).json({ message: 'Usuário não encontrado!' })
+        return
+    }
+
+    try{
+        await Colecao.deleteOne({_id: id})
+
+        res.status(200).redirect("/cards")
     }catch(error){
         res.status(500).json({ error: error })
     }

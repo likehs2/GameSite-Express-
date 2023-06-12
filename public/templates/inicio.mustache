@@ -42,11 +42,21 @@
             console.log("passou do ponto 3")
             const itensHTML = itens.map(item => {
                 const name_colecao = item.name_colecao;
-                const img_colecao = item.img_colecao; 
+                const img_colecao = item.img_colecao;
+                const _id = item._id; 
+                let actionsHTML = '';
+                if("{{pass_user_login}}" === "vinicius"){
+                    actionsHTML = `
+                        <br>
+                        <a href="/colecao/deletar/${_id}">Deletar</a>
+                        <a href="/atualizarColecao?name_colecao=${name_colecao}&img_colecao=${img_colecao}&_id=${_id}">Editar</a>
+                    `;
+                }
                 return `
-                <div style="width: 184px; height: 229px; margin-right: 10px; margin-left: 10px; margin-bottom: 30px; margin-top: 30px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); text-align: center; color: white;">
+                <div style="width: 184px; height: 229px; margin-right: 10px; margin-left: 10px; margin-bottom: 30px; margin-top: 100px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); text-align: center; color: white;">
                     <a href = '/telaAvaliacao?img_colecao1=${img_colecao}&name_colecao1=${name_colecao}' class="card-link"><img src="${img_colecao}" alt="${name_colecao}" style="width: 184px; height: 229px; transition: width 0.5s, height 0.5s;"></a>
                     <h3>${name_colecao}</h3>
+                    ${actionsHTML}
                 </div>
   `;
             }).join('');
@@ -63,6 +73,14 @@
     }
 
     preencherItens();
+
+    function validaUsuario(){
+        if("{{pass_user_login}}" == "Login"){
+
+        }else{
+            
+        }
+    }
 
 </script>
 

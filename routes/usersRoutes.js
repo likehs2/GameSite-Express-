@@ -116,6 +116,25 @@ router.delete('/:id', async (req, res) =>{
 
 })
 
+router.get('/deletar/:id', async (req, res) =>{
+    const id = req.params.id
+
+    const usuarios = await Users.findOne({ _id: id })
+    if(!usuarios){
+        res.status(422).json({ message: 'Usuário não encontrado!' })
+        return
+    }
+
+    try{
+        await Users.deleteOne({_id: id})
+
+        res.status(200).redirect("/cards")
+    }catch(error){
+        res.status(500).json({ error: error })
+    }
+
+})
+
 router.post('/login', async (req, res) => {
     const { name_user_login, pass_user_login } = req.body;
 
