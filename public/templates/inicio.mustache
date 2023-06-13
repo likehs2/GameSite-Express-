@@ -9,14 +9,12 @@
 <body>
     <div class="navbar">
         <div class="divpaginainicial">
-            <a href='/inicio'>{{pass_user_login}}</a>
+            <a href='{{rota}}'>{{pass_user_login}}</a>
         </div>
     </div>
     <img src="../imagens/logosite.png"
         style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
-    <form action="/cadastrarColecao" method="post">
-        <button id="criarDivBtn">Cadastrar Jogo</button>
-
+    <form action="/cadastrarColecao" method="post" id="cadastrarjogo">
     </form>
     <div class="divgeral">
 
@@ -26,9 +24,38 @@
 <script>
     console.log("ola")
     const w = document.getElementById('cards');
+    const z = document.getElementById('divpaginainicial')
+    const x = document.getElementById('cadastrarjogo')
+
+    async function validaUser(){
+            const response = await fetch('/users/procura/{{pass_user_login}}');
+            if (!response.ok) {
+                throw new Error('Erro ao obter os itens do banco de dados');
+            }
+            const itens = await response.json();
+            const itensHTML2 = itens.map(item => {
+                const adm_user = item.adm_user
+                const _id = item._id;
+                let actionsHTML = '';
+                if (adm_user === true) {
+                    actionsHTML = `
+                        <button id="criarDivBtn">Cadastrar Jogo</button>
+                    `;
+                }
+                return `
+                    ${actionsHTML}
+  `;
+            }).join('');
+            x.innerHTML = itensHTML2;
+        }
+            
+
+    validaUser()
 
     async function preencherItens() {
         try {
+
+            console.log("{{rota}}")
             console.log("passou do ponto 0")
             const response = await fetch('/colecao');
             console.log("passou do ponto 1")
@@ -43,9 +70,9 @@
             const itensHTML = itens.map(item => {
                 const name_colecao = item.name_colecao;
                 const img_colecao = item.img_colecao;
-                const _id = item._id; 
+                const _id = item._id;
                 let actionsHTML = '';
-                if("{{pass_user_login}}" === "vinicius"){
+                if ("{{pass_user_login}}" === "vinicius") {
                     actionsHTML = `
                         <br>
                         <a href="/colecao/deletar/${_id}">Deletar</a>
@@ -60,27 +87,21 @@
                 </div>
   `;
             }).join('');
+            
 
             w.style.display = 'flex';
             w.style.flexWrap = 'wrap';
-            w.style.justifyContent = 'flex-start'; 
+            w.style.justifyContent = 'flex-start';
             w.style.gap = '10px';
             w.style.display = 'flex';
             w.innerHTML = itensHTML;
+            
         } catch (error) {
             console.error('Erro ao obter os itens do banco de dados:', error);
         }
     }
 
     preencherItens();
-
-    function validaUsuario(){
-        if("{{pass_user_login}}" == "Login"){
-
-        }else{
-            
-        }
-    }
 
 </script>
 

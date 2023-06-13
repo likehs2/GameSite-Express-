@@ -73,13 +73,16 @@ app.get('/', (req, res) =>{
 })
 
 app.get('/cards', (req, res) =>{
+    let rota
     let pass_user_login
     if(req.session.name_user_login){
-       pass_user_login = req.session.name_user_login
-    }else{
-        pass_user_login = "Login";
-    }
-    res.render("inicio", {pass_user_login: pass_user_login});
+      pass_user_login = req.session.name_user_login
+      rota = "/atualizarUsuario?name_user={{pass_user_login}}"
+   }else{
+       pass_user_login = "Login";
+       rota = "/"
+   }
+    res.render("inicio", {pass_user_login: pass_user_login, rota: rota});
 })
 
 app.get('/inicio', (req, res) =>{
@@ -107,40 +110,66 @@ app.get('/cadastrarColecao', (req, res) =>{
 
 app.get('/telaAvaliacao', (req, res) =>{
   let pass_user_login
-    if(req.session.name_user_login){
-       pass_user_login = req.session.name_user_login
-    }else{
-        pass_user_login = "Login";
-    }
+  let rota
   const name = req.query.name_colecao1; 
   const image = req.query.img_colecao1;
-  res.render("telaAvaliacao", {name: name, image: image, pass_user_login: pass_user_login});
+    if(req.session.name_user_login){
+       pass_user_login = req.session.name_user_login
+       rota = "/atualizarUsuario?name_user={{pass_user_login}}"
+       res.render("telaAvaliacao", {name: name, image: image, pass_user_login: pass_user_login, rota: rota});
+    }else{
+        pass_user_login = "Login";
+        res.redirect('/inicio');
+    }
 })
 
 app.get('/telaAtualizaAvaliacao', (req, res) =>{
   let pass_user_login
-    if(req.session.name_user_login){
-       pass_user_login = req.session.name_user_login
-    }else{
-        pass_user_login = "Login";
-    }
+  let rota
   const name_avaliacao = req.query.name_avaliacao; 
   const mensagem_avaliacao = req.query.mensagem_avaliacao;
   const _id = req.query._id;
-  res.render("telaAtualizaAvaliacao", {name_avaliacao: name_avaliacao, mensagem_avaliacao: mensagem_avaliacao, _id: _id, pass_user_login: pass_user_login});
+    if(req.session.name_user_login){
+      rota = "/atualizarUsuario?name_user={{pass_user_login}}"
+       pass_user_login = req.session.name_user_login
+       res.render("telaAtualizaAvaliacao", {name_avaliacao: name_avaliacao, mensagem_avaliacao: mensagem_avaliacao, _id: _id, pass_user_login: pass_user_login, rota: rota});
+    }else{
+        pass_user_login = "Login";
+        res.redirect('/inicio');
+    }
+  
 })
 
 app.get('/atualizarColecao', (req, res) =>{
   let pass_user_login
-    if(req.session.name_user_login){
-       pass_user_login = req.session.name_user_login
-    }else{
-        pass_user_login = "Login";
-    }
+  let rota
   const name_colecao = req.query.name_colecao; 
   const img_colecao = req.query.img_colecao;
   const _id = req.query._id;
-  res.render("atualizarColecao", {name_colecao: name_colecao, img_colecao: img_colecao, _id: _id, pass_user_login: pass_user_login});
+    if(req.session.name_user_login){
+       pass_user_login = req.session.name_user_login
+       rota = "/atualizarUsuario?name_user={{pass_user_login}}"
+       res.render("atualizarColecao", {name_colecao: name_colecao, img_colecao: img_colecao, _id: _id, pass_user_login: pass_user_login, rota: rota});
+    }else{
+        pass_user_login = "Login";
+        res.redirect('/inicio');
+    }
+   
+})
+
+app.get('/atualizarUsuario', (req, res) =>{
+  let pass_user_login
+  let rota
+  
+    if(req.session.name_user_login){
+       pass_user_login = req.session.name_user_login
+       rota = "/atualizarUsuario?name_user={{pass_user_login}}"
+    }else{
+        pass_user_login = "Login";
+        rota = "/"
+    }
+  
+  res.render("atualizarUsuario", {pass_user_login: pass_user_login, rota: rota});
 })
 
 app.post('/enviaemail', (req, res) =>{
@@ -175,6 +204,10 @@ app.post('/telaAvaliacao', (req, res) =>{
   res.redirect('/telaAvaliacao');
 })
 
+app.post('/atualizarUsuario', (req, res) =>{
+  res.redirect('/atualizarUsuario');
+})
+
 app.post('/atualizarColecao', (req, res) =>{
   res.redirect('/atualizarColecao');
 })
@@ -196,7 +229,7 @@ app.post('/contato', (req, res) =>{
 })
 
 app.post('/inicio', (req, res) =>{
-    res.redirect('/login');
+    res.redirect('/');
 })
 
 
