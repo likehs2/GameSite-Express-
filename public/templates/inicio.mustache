@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Coleção</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="divpaginainicial">
+            <a href='{{rota}}'>{{pass_user_login}}</a>
+        </div>
+    </div>
+    <img src="../imagens/logosite.png"
+        style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
+    <form action="/cadastrarColecao" method="post" id="cadastrarjogo">
+    </form>
+    <div class="divgeral">
+
+        <div id="cards"></div>
+    </div>
+</body>
+<script>
+    console.log("ola")
+    const w = document.getElementById('cards');
+    const z = document.getElementById('divpaginainicial')
+    const x = document.getElementById('cadastrarjogo')
+
+    async function validaUser(){
+            const response = await fetch('/users/procura/{{pass_user_login}}');
+            if (!response.ok) {
+                throw new Error('Erro ao obter os itens do banco de dados');
+            }
+            const itens = await response.json();
+            const itensHTML2 = itens.map(item => {
+                const adm_user = item.adm_user
+                const _id = item._id;
+                let actionsHTML = '';
+                if (adm_user === true) {
+                    actionsHTML = `
+                        <button id="criarDivBtn">Cadastrar Jogo</button>
+                    `;
+                }
+                return `
+                    ${actionsHTML}
+  `;
+            }).join('');
+            x.innerHTML = itensHTML2;
+        }
+            
+
+    validaUser()
+
+    async function preencherItens() {
+        try {
+
+            console.log("{{rota}}")
+            console.log("passou do ponto 0")
+            const response = await fetch('/colecao');
+            console.log("passou do ponto 1")
+            if (!response.ok) {
+                throw new Error('Erro ao obter os itens do banco de dados');
+                console.log("passou do ponto 2")
+            }
+
+            const itens = await response.json();
+            console.log(itens)
+            console.log("passou do ponto 3")
+            const itensHTML = itens.map(item => {
+                const name_colecao = item.name_colecao;
+                const img_colecao = item.img_colecao;
+                const _id = item._id;
+                let actionsHTML = '';
+                if ("{{pass_user_login}}" === "vinicius") {
+                    actionsHTML = `
+                        <br>
+                        <a href="/colecao/deletar/${_id}">Deletar</a>
+                        <a href="/atualizarColecao?name_colecao=${name_colecao}&img_colecao=${img_colecao}&_id=${_id}">Editar</a>
+                    `;
+                }
+                return `
+                <div style="width: 184px; height: 229px; margin-right: 10px; margin-left: 10px; margin-bottom: 30px; margin-top: 100px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); text-align: center; color: white;">
+                    <a href = '/telaAvaliacao?img_colecao1=${img_colecao}&name_colecao1=${name_colecao}' class="card-link"><img src="${img_colecao}" alt="${name_colecao}" style="width: 184px; height: 229px; transition: width 0.5s, height 0.5s;"></a>
+                    <h3>${name_colecao}</h3>
+                    ${actionsHTML}
+                </div>
+  `;
+            }).join('');
+            
+
+            w.style.display = 'flex';
+            w.style.flexWrap = 'wrap';
+            w.style.justifyContent = 'flex-start';
+            w.style.gap = '10px';
+            w.style.display = 'flex';
+            w.innerHTML = itensHTML;
+            
+        } catch (error) {
+            console.error('Erro ao obter os itens do banco de dados:', error);
+        }
+    }
+
+    preencherItens();
+
+</script>
+
+</html>
+
+<style>
+    body {
+
+        background-image: url('../imagens/retro.gif');
+        background-repeat: repeat;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .navbar {
+        display: flex;
+        width: 100%;
+        height: 60px;
+        background-color: #2c3e50;
+    }
+
+    .navbar a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .divgeral {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+
+    .divpaginainicial {
+        padding: 10px 10px 10px 10px;
+        margin-top: 6px;
+        display: block;
+        height: 20px;
+        margin-left: 90%;
+        color: #ffffff;
+        background-color: #ff7f50;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.2);
+    }
+
+    .divpaginainicial:hover {
+        transition: 0.5s;
+        background-color: #50d0ff;
+        color: black;
+    }
+
+    #criarDivBtn {
+
+        display: block;
+        margin-left: auto;
+        margin-right: 5%;
+        margin-top: 5px;
+        margin-bottom: 20px;
+        background-color: #FFA500;
+        border: 2px solid #8b5b02;
+        border-radius: 6px;
+        height: 35px;
+    }
+
+    #criarDivBtn:hover {
+        background-color: #fcc96a;
+        color: rgb(58, 58, 58);
+        transition: 0.5s;
+    }
+</style>

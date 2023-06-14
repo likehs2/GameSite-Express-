@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Atualizar Usuario</title>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="divpaginainicial2">
+            <a href='/cards'>Voltar</a>
+        </div>
+        <div class="divpaginainicial">
+            <a href='{{rota}}'>{{pass_user_login}}</a>
+        </div>
+    </div>
+
+    <div class="divgeral">
+        <img src="../imagens/logosite.png"
+            style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
+    </div>
+    <div class="button">
+
+        <form action="/users/atualiza/{{pass_user_login}}" method="post">
+            <div id="editar" class="editar">
+
+            </div>
+            <div class="jText-img">
+
+                <label id="texto-imagem" for="name">Nova Senha:</label>
+                <textarea id="jText-1" type="password" class="input-colecao" placeholder="Insira a nova Senha"
+                    name="pass_user"></textarea>
+
+            </div>
+            <button id="button-1" type="submit">Atualizar</button>
+        </form>
+        <form action="/users/deletar/{{pass_user_login}}" method="post">
+            <br>
+            <textarea id="jText-1" type="password" class="input-colecao" placeholder="Confirme sua senha para exclusão da conta" name="pass_user"></textarea>
+            <button id="button-3" type="submit">Excluir Conta</button>
+        </form>
+
+        <form action="/inicio" method="post">
+            <br>
+            <button id="button-1" type="submit">Sair</button>
+            <br>
+        </form>
+
+    </div>
+</body>
+<script>
+    const w = document.getElementById('editar');
+
+    async function validaUser() {
+        const response = await fetch('/users/procura/{{pass_user_login}}');
+        if (!response.ok) {
+            throw new Error('Erro ao obter os itens do banco de dados');
+            console.log("passou do ponto 2")
+        }
+        const itens = await response.json();
+        let validaUser = ''
+        console.log(itens)
+        const itensHTML = itens.map(item => {
+            const name_user = item.name_user;
+            const pass_user = item.pass_user;
+            const _id = item._id;
+            return `
+                <a id="mensagem-text">Atualizar os dados referente ao usuario ${name_user} ${_id}</a>
+  `;
+        }).join('');
+        w.innerHTML = itensHTML;
+    }
+
+    validaUser()
+
+</script>
+
+</html>
+
+<style>
+    body {
+        /*background-color: #f1f1f1;*/
+        background-image: url('../imagens/retro.gif');
+        background-repeat: repeat;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .navbar {
+        display: flex;
+        width: 100%;
+        height: 60px;
+        background-color: #2c3e50;
+    }
+
+    .navbar a {
+        text-decoration: none;
+        color: white;
+    }
+
+    .divpaginainicial {
+        padding: 10px 10px 10px 10px;
+        margin-top: 6px;
+        display: block;
+        height: 20px;
+        margin-left: 50px;
+        color: #ffffff;
+        background-color: #ff7f50;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.2);
+    }
+
+    .divpaginainicial:hover {
+        transition: 0.5s;
+        background-color: #50d0ff;
+        color: black;
+    }
+
+    .divpaginainicial2 {
+        padding: 10px 10px 10px 10px;
+        margin-top: 6px;
+        display: block;
+        height: 20px;
+        margin-left: 90%;
+        color: #ffffff;
+        background-color: #ff7f50;
+        border: 2px solid black;
+        border-radius: 5px;
+        box-shadow: 4px 4px 8px rgb(0, 0, 0, 0.2);
+    }
+
+    .divpaginainicial2:hover {
+        transition: 0.5s;
+        background-color: #50d0ff;
+        color: black;
+    }
+
+    .divgeral {
+        width: 100%;
+        height: 100%;
+    }
+
+    .editar {
+        display: flex;
+        margin-top: 40px;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 40px;
+
+    }
+
+    .novacolecao {
+        display: flex;
+        margin-left: 20px;
+        margin-top: 35px;
+        width: 90%;
+
+    }
+
+
+    .jText {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 10px;
+
+
+    }
+
+    .jText-img {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding-bottom: 10px;
+
+
+    }
+
+    .button {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        align-items: center;
+        width: 100%;
+
+    }
+
+    .button-2 {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20px;
+        align-items: center;
+        width: 100%;
+
+    }
+
+    #mensagem-text {
+        font-family: sans-serif;
+        font-size: 30px;
+        color: rgb(204, 203, 207);
+    }
+
+    #mensagem-1-text {
+        margin-left: auto;
+        margin-right: auto;
+        font-family: sans-serif;
+        font-size: 26px;
+        color: rgb(250, 226, 226);
+    }
+
+    #jText-image {
+        width: 485px;
+        height: 20px;
+        border: 2px;
+        border-radius: 4px;
+
+    }
+
+    #jText-1 {
+        width: 485px;
+        height: 20px;
+        border: 2px;
+        border-radius: 4px;
+
+    }
+
+    #jText-descricao {
+        width: 485px;
+        height: 80px;
+        border: 2px;
+        border-radius: 4px;
+
+    }
+
+    #texto-nome {
+        color: rgb(204, 203, 207);
+        font-family: sans-serif;
+        margin-right: auto;
+        margin-left: auto;
+        font-weight: 300;
+    }
+
+    #texto-descricao {
+        color: rgb(204, 203, 207);
+        font-family: sans-serif;
+        margin-right: 410px;
+        font-weight: 300;
+    }
+
+    #texto-imagem {
+        color: rgb(204, 203, 207);
+        font-family: sans-serif;
+        margin-right: auto;
+        margin-left: auto;
+        font-weight: 300;
+    }
+
+    #button-1 {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #FFA500;
+        border: 2px solid #FFA500;
+        border-radius: 6px;
+        height: 35px;
+    }
+
+    #button-1:hover {
+        background-color: #50d0ff;
+        border: 2px solid #50d0ff;
+        color: white;
+        transition: 0.5s;
+    }
+
+    #button-3 {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #ff0000;
+        color: white;
+        border: 2px solid #ff0000;
+        border-radius: 6px;
+        height: 35px;
+        margin-top: 30px;
+    }
+
+    #button-3:hover {
+        background-color: #50d0ff;
+        border: 2px solid #50d0ff;
+        color: white;
+        transition: 0.5s;
+    }
+</style>
