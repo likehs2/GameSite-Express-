@@ -9,6 +9,7 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose')
 const cookieParse = require('cookie-parser')
 const session = require('express-session')
+//const puppeteer = require('puppeteer')
 const jwt = require('jsonwebtoken')
 
 app.use(cookieParse())
@@ -88,6 +89,30 @@ app.get('/cards', (req, res) =>{
 app.get('/inicio', (req, res) =>{
     res.render("login")
 })
+
+app.get('/relatorioUsuario', (req, res) => {
+  res.render('relatorioUsuario');
+});
+/*
+app.get('/relatorioUsuarioPDF', async (req, res) => {
+  try {
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+
+    await page.goto('http://localhost:3000/relatorioUsuario', { waitUntil: 'networkidle0' });
+    await page.waitForTimeout(2000); 
+    const pdf = await page.pdf({ format: 'A4' });
+
+    await browser.close();
+
+    res.contentType('application/pdf');
+    res.send(pdf);
+  } catch (error) {
+    console.error('Erro ao gerar o PDF:', error);
+    res.status(500).send('Erro ao gerar o PDF');
+  }
+});
+*/
 app.get('/conteudo', (req, res) =>{
     res.render("sobreSite");
 })
@@ -198,6 +223,10 @@ app.post('/enviaemail', (req, res) =>{
 
 app.post('/tecnologia', (req, res) =>{
     res.redirect('/tecnologias');
+})
+
+app.post('/relatorioUsuario', (req, res) =>{
+  res.redirect('/relatorioUsuario');
 })
 
 app.post('/telaAvaliacao', (req, res) =>{

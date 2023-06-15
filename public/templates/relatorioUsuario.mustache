@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Relatorio de Usuarios</title>
+    </head>
+
+    <body>
+        <div class="cabecalho">
+            <h1>Relatorio de Usuários cadastrados no sistema</h1>
+        </div>
+        <div id="usuariosparainserir">
+            
+        </div>
+    </body>
+</html>
+
+<style>
+
+    .cabecalho{
+        display: flex;
+        align-items: center;
+        top: 0px;
+        width: 100%;
+    }
+
+    .cabecalho h1{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    #usuariosparainserir{
+        width: 100%;
+        color: black;
+    }
+</style>
+
+<script>
+    console.log("ola")
+    const w = document.getElementById('usuariosparainserir');
+
+    async function preencherItens() {
+        try {
+
+            console.log("{{rota}}")
+            console.log("passou do ponto 0")
+            const response = await fetch('/users');
+            console.log("passou do ponto 1")
+            if (!response.ok) {
+                throw new Error('Erro ao obter os itens do banco de dados');
+                console.log("passou do ponto 2")
+            }
+
+            const itens = await response.json();
+            console.log(itens)
+            console.log("passou do ponto 3")
+            const itensHTML = itens.map(item => {
+                const name_users = item.name_user;
+                const admin_users = item.adm_user;
+                
+                const _id = item._id;
+                let auxAdmin = ''
+                if(admin_users){
+                    auxAdmin = 'sim'
+                }else{
+                    auxAdmin = 'não'
+                }
+                return `
+                <div style="width: 409px; height: 150px; margin-right: 10px; margin-left: 10px; margin-bottom: 6px; margin-top: 50px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); text-align: center; color: black;">
+                    <h3>ID: ${_id}</h3>
+                    <br>
+                    <a>LOGIN/NICKNAME: ${name_users}</a>
+                    <br>
+                    <a>ADMINISTRADOR: ${auxAdmin}</a>
+                </div>
+  `;
+            }).join('');
+            
+
+            w.innerHTML = itensHTML;
+            
+        } catch (error) {
+            console.error('Erro ao obter os itens do banco de dados:', error);
+        }
+    }
+
+    preencherItens();
+
+</script>
