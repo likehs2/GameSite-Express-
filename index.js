@@ -42,7 +42,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname,"public")))
 
 app.engine(".mustache", engine);
-app.set("views", path.join(__dirname, "public/templates"));
+app.set("views", path.join(__dirname, "templates"));
 app.set("view engine", "mustache")
 
 

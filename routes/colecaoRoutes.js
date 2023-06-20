@@ -24,7 +24,7 @@ routerColecao.post('/', async (req, res) =>{
     try{
         await Colecao.create(colecao)
 
-        res.status(201).redirect('/cards')
+        res.status(201).json({message: "Usuario cadastrado"})
 
     }catch (error) {
         res.status(500).json({error: error})

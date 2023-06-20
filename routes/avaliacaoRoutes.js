@@ -14,7 +14,7 @@ routerAvaliacao.post('/', async (req, res) =>{
     try{
         await Avaliacao.create(avaliacao)
 
-        res.status(201).redirect('/cards')
+        res.status(201).json(avaliacao)
 
     }catch (error) {
         res.status(500).json({error: error})
@@ -92,7 +92,7 @@ routerAvaliacao.post('/atualiza/:id', async (req, res) =>{
     try {
         const updateAvaliacao = await Avaliacao.updateOne({ _id: id }, avaliacao)
 
-        res.status(200).redirect("/cards")
+        res.status(200).json({message: "comentario atualizado"})
         
     } catch (error) {
         res.status(500).json({ error: error})
@@ -129,7 +129,7 @@ routerAvaliacao.get('/deletar/:id', async (req, res) =>{
     try{
         await Avaliacao.deleteOne({_id: id})
 
-        res.status(200).redirect("/cards")
+        res.status(200).json({message: "item deletado"})
     }catch(error){
         res.status(500).json({ error: error })
     }
@@ -325,7 +325,7 @@ routerAvaliacao.post('/CarregarDados', async (req, res) =>{
         await Avaliacao.create(avaliacao4Jogo5)
         await Avaliacao.create(avaliacao5Jogo5)
 
-        res.status(201).redirect('/cards')
+        res.status(201).json({message: "objetos cadastrados"})
 
     }catch (error) {
         res.status(500).json({error: error})

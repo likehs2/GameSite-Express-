@@ -40,7 +40,7 @@ router.post('/', async (req, res) =>{
     try{
         await Users.create(users)
 
-        res.status(201).redirect('/inicio')
+        res.status(201).json(users)
 
     }catch (error) {
         res.status(500).json({error: error})
@@ -126,7 +126,7 @@ router.post('/atualiza/:nome', async (req, res) =>{
     try {
         const updateUsuarios = await Users.updateOne({ name_user: nome }, users)
 
-        res.status(200).redirect('/inicio')
+        res.status(200).json({message: "atualizado"})
         
     } catch (error) {
         res.status(500).json({ error: error})
@@ -164,7 +164,7 @@ router.post('/deletar/:nome', async (req, res) =>{
     try{
         await Users.deleteOne({name_user: nome})
 
-        res.status(200).redirect('/inicio')
+        res.status(200).json({ message: "usuario deletado" })
     }catch(error){
         res.status(500).json({ error: error })
     }
@@ -183,7 +183,7 @@ router.get('/deletar/:id', async (req, res) =>{
     try{
         await Users.deleteOne({_id: id})
 
-        res.status(200).redirect('/cards')
+        res.status(200).json({ message: "Usuario deletado" })
         
     }catch(error){
         res.status(500).json({ error: error })
@@ -235,7 +235,7 @@ router.post('/CarregarDados', async (req, res) =>{
         await Users.create(user4)
         await Users.create(user5)
 
-        res.status(201).redirect('/inicio')
+        res.status(201).json({message: "usuarios criados"})
 
     }catch (error) {
         res.status(500).json({error: error})
@@ -257,12 +257,8 @@ router.post('/login', async (req, res) => {
         if (pass_user_login !== user.pass_user) {
             return res.status(401).json({ error: 'Senha incorreta' });
         }
-
-        // Login bem-sucedido
-        req.session.name_user_login = name_user_login 
-        req.session.pass_user_login = pass_user_login 
         
-        res.status(200).redirect('/cards');
+        res.status(200).json({message: "Login realizado"})
     } catch (error) {
         res.status(500).json({ error: 'Erro ao realizar o login' });
     }
