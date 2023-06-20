@@ -191,6 +191,57 @@ router.get('/deletar/:id', async (req, res) =>{
 
 })
 
+router.post('/CarregarDados', async (req, res) =>{
+
+    const user1 = {
+        name_user: "avaliador1",
+        pass_user: "1234",
+        email_user: "avaliador@hotmail.com",
+        adm_user: false
+    }
+
+    const user2 = {
+        name_user: "avaliador2",
+        pass_user: "1234",
+        email_user: "avaliador@hotmail.com",
+        adm_user: false
+    }
+
+    const user3 = {
+        name_user: "avaliador3",
+        pass_user: "1234",
+        email_user: "avaliador@hotmail.com",
+        adm_user: false
+    }
+
+    const user4 = {
+        name_user: "avaliador4",
+        pass_user: "1234",
+        email_user: "avaliador@hotmail.com",
+        adm_user: false
+    }
+
+    const user5 = {
+        name_user: "avaliador5",
+        pass_user: "1234",
+        email_user: "avaliador@hotmail.com",
+        adm_user: false
+    }
+
+    try{
+        await Users.create(user1)
+        await Users.create(user2)
+        await Users.create(user3)
+        await Users.create(user4)
+        await Users.create(user5)
+
+        res.status(201).redirect('/inicio')
+
+    }catch (error) {
+        res.status(500).json({error: error})
+    }
+})
+
 router.post('/login', async (req, res) => {
     const { name_user_login, pass_user_login } = req.body;
 
