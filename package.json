@@ -2,7 +2,7 @@
   "name": "projetoweb2",
   "version": "1.0.0",
   "description": "Projeto Web2\r TCC1",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon main"
@@ -15,6 +15,7 @@
     "esm": "^3.2.25",
     "express": "^4.18.2",
     "express-session": "^1.17.3",
+    "fs": "^0.0.1-security",
     "joi": "^17.9.2",
     "jsonwebtoken": "^9.0.0",
     "mongodb": "^5.5.0",

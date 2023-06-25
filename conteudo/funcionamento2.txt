@@ -1,0 +1,3 @@
+Contará com uma tela de login, uma tela de Informações sobre o site, uma tela de infomrações sobre o Desenvolvedor, uma tela de Contato para envio de e-mails a equipe de
+desenvolvimento, uma tela para cadastro de um determinado jogo, ai clicar em um card de determinado jogo, será carregado um ambiente dedicado a esse jogo.
+Dentro desse ambiente será possivel fazer comentários e avaliações sobre o jogo em específico.

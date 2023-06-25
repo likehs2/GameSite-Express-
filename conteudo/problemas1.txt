@@ -1,0 +1,10 @@
+Com o crescimento do mercado de jogos eletronicos, a comunidade gamer tem se
+expandido cada vez mais, tendo em seu meio um publico interessado em compartilhar suas
+experiencias e opniões sobre os jogos. Com base nesse contexto, surge a ideia de criar um site
+colaborativo onde esses jogadores possam avaliar e comentar sobre os jogos que ja jogaram.
+O intuito desse site,  ́e auxiliar os novos jogadores na decisao de comprar ou nao
+determinado jogo a partir da experiencia compartilhada por outros jogadores. Esse site deve
+funcionar como base para uma comunidade gamer, onde os interessados poderao buscar ou
+compartilhar informações.
+É esperado que esse trabalho possa auxiliar em uma melhor experiencia para o jogador,
+diminuindo os casos de quebra de expectativa sobre determinado título
