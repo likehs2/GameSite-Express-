@@ -1,15 +1,18 @@
 const routerColecao = require('express').Router()
 const Colecao = require('../models/Colecao')
+const API = require("../controllers/controllerColecao")
 
-routerColecao.post('/', async (req, res) =>{
+
+routerColecao.post('/cadastrar', async (req, res) =>{
     const {name_colecao, img_colecao} = req.body
+    console.log(name_colecao)
 
     if(!name_colecao){
         res.status(422).json({ error: 'o nome é obrigatorio' })
     }
    
 
-    const existingColecao = await Colecao.findOne({ name_colecao });
+    const existingColecao = API.findUnicaColecao(name_colecao);
 
     if (existingColecao) {
         return res.status(422).json({ error: 'O jogo ja está cadastrado' });
@@ -22,24 +25,21 @@ routerColecao.post('/', async (req, res) =>{
     }
 
     try{
-        await Colecao.create(colecao)
+        await API.createColecao(colecao)
 
-        res.status(201).json({message: "Usuario cadastrado"})
+        
+        res.status(201).redirect('/cards')
 
     }catch (error) {
         res.status(500).json({error: error})
     }
 })
 
-routerColecao.get('/', async (req, res) =>{
-    try {
-        const colecao = await Colecao.find()
-
-        res.status(200).json(colecao)
-
-    } catch (error) {
-        res.status(500).json({ error: error})
-    }
+routerColecao.get('/buscar', async (req, res) =>{
+    
+    const colecao = await API.findColecao()
+    res.json(colecao)
+    
 })
 
 routerColecao.get('/:id', async (req, res) =>{
@@ -59,25 +59,6 @@ routerColecao.get('/:id', async (req, res) =>{
     }
 })
 
-routerColecao.patch('/:id', async (req, res) =>{
-    const id = req.params.id
-    const {name_colecao, img_colecao} = req.body
-
-
-    const users = {
-        name_colecao,
-        img_colecao
-    }
-
-    try {
-        const updateUsuarios = await Colecao.updateOne({ _id: id })
-
-        res.status(200).json(usuarios)
-        
-    } catch (error) {
-        res.status(500).json({ error: error})
-    }
-})
 
 routerColecao.post('/atualiza/:id', async (req, res) =>{
     const id = req.params.id

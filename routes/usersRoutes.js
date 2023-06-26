@@ -38,7 +38,11 @@ router.post('/', async (req, res) =>{
     }
 
     try{
+
+
         await Users.create(users)
+
+       
 
         res.status(201).json(users)
 
@@ -257,8 +261,9 @@ router.post('/login', async (req, res) => {
         if (pass_user_login !== user.pass_user) {
             return res.status(401).json({ error: 'Senha incorreta' });
         }
-        
-        res.status(200).json({message: "Login realizado"})
+        req.session.name_user_login = name_user_login 
+        req.session.pass_user_login = pass_user_login 
+        res.status(200).redirect('/cards')
     } catch (error) {
         res.status(500).json({ error: 'Erro ao realizar o login' });
     }
