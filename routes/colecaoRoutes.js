@@ -3,37 +3,8 @@ const Colecao = require('../models/Colecao')
 const API = require("../controllers/controllerColecao")
 
 
-routerColecao.post('/cadastrar', async (req, res) =>{
-    const {name_colecao, img_colecao} = req.body
-    console.log(name_colecao)
+routerColecao.post('/cadastrar', API.createColecao)
 
-    if(!name_colecao){
-        res.status(422).json({ error: 'o nome é obrigatorio' })
-    }
-   
-
-    const existingColecao = API.findUnicaColecao(name_colecao);
-
-    if (existingColecao) {
-        return res.status(422).json({ error: 'O jogo ja está cadastrado' });
-    }
-
-    const colecao = {
-        name_colecao,
-        img_colecao,
-        
-    }
-
-    try{
-        await API.createColecao(colecao)
-
-        
-        res.status(201).redirect('/cards')
-
-    }catch (error) {
-        res.status(500).json({error: error})
-    }
-})
 
 routerColecao.get('/buscar', async (req, res) =>{
     

@@ -57,7 +57,7 @@
 
             console.log("{{rota}}")
             console.log("passou do ponto 0")
-            const response = await fetch('/colecao');
+            const response = await fetch('/colecao/buscar');
             console.log("passou do ponto 1")
             if (!response.ok) {
                 throw new Error('Erro ao obter os itens do banco de dados');

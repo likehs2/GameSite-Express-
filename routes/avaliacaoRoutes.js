@@ -14,6 +14,25 @@ routerAvaliacao.post('/', async (req, res) =>{
     try{
         await Avaliacao.create(avaliacao)
 
+        res.status(201).res.redirect('/cards');
+
+    }catch (error) {
+        res.status(500).json({error: error})
+    }
+})
+routerAvaliacao.post('/cadastraavaliacao', async (req, res) =>{
+    const {name_avaliacao, mensagem_avaliacao, jogo_avaliacao} = req.body
+
+    const avaliacao = {
+        name_avaliacao,
+        mensagem_avaliacao,
+        jogo_avaliacao,
+        
+    }
+
+    try{
+        await Avaliacao.create(avaliacao)
+
         res.status(201).json(avaliacao)
 
     }catch (error) {
@@ -32,6 +51,7 @@ routerAvaliacao.get('/', async (req, res) =>{
     }
 })
 
+
 routerAvaliacao.get('/avalia/:nome', async (req, res) =>{
     const nome = req.params.nome
     try {
@@ -43,6 +63,7 @@ routerAvaliacao.get('/avalia/:nome', async (req, res) =>{
         res.status(500).json({ error: error})
     }
 })
+
 
 routerAvaliacao.get('/:nome', async (req, res) =>{
     const nome = req.params.nome
@@ -61,7 +82,7 @@ routerAvaliacao.get('/:nome', async (req, res) =>{
     }
 })
 
-routerAvaliacao.patch('/:id', async (req, res) =>{
+routerAvaliacao.put('/:id', async (req, res) =>{
     const id = req.params.id
     const {mensagem_avaliacao} = req.body
 
@@ -332,14 +353,5 @@ routerAvaliacao.post('/CarregarDados', async (req, res) =>{
     }
 })
 
-routerAvaliacao.get('/', async (req, res) =>{
-    try {
-        const avaliacao = await Avaliacao.find()
 
-        res.status(200).json(avaliacao)
-
-    } catch (error) {
-        res.status(500).json({ error: error})
-    }
-})
 module.exports = routerAvaliacao

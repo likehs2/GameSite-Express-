@@ -1,12 +1,15 @@
 const Colecao = require('../models/Colecao')
 
-const createColecao = async (req, res) =>{
-    const colecao = {
+const createColecao = async (req, res) =>{  
+    console.log("entrou na createColecao")  
+    const name_colecao = req.body.name_colecao
+    const img_colecao = req.body.img_colecao
+    console.log(name_colecao, img_colecao + "dentro da funcao")
+    const colecao ={
         name_colecao,
         img_colecao,
-        
     }
-
+    console.log(colecao + "colecao dentro da funcao")
     try{
         await Colecao.create(colecao)
 
@@ -20,7 +23,7 @@ const createColecao = async (req, res) =>{
 const findColecao = async (req, res) =>{
     try {
         const colecao = await Colecao.find()
-        res.status(200).json(colecao)
+        return colecao
 
     } catch (error) {
         res.status(500).json({ error: error})
@@ -36,9 +39,8 @@ const findUnicaColecao = async (req, res) =>{
 
         if(!colecao) {
             res.status(422).json({ message: 'Jogo não encontrado!'})
-            return
         }
-        res.status(200).json(colecao)
+        return colecao
         
     } catch (error) {
         res.status(500).json({ error: error})
@@ -65,6 +67,29 @@ const updateColecao = async (req, res) =>{
     }
 }
 
+const createAvaliacao = async (req, res) =>{
+    const {avaliador_colecao, mensagem_colecao, jogo_avaliacao} = req.body
+
+
+    const colecao = {
+        avaliacao_colecao: {
+            avaliador_colecao,
+            mensagem_colecao,
+        },  
+        
+    }
+
+    try {
+        const updateColecao = await Colecao.updateOne({ name_colecao: jogo_avaliacao }, colecao)
+
+        res.status(200).json(updateColecao)
+        
+    } catch (error) {
+        res.status(500).json({ error: error})
+    }
+}
+
+
 
 const deleteColecao = async (req, res) =>{
     const id = req.params.id
@@ -90,5 +115,6 @@ module.exports ={
     findColecao,
     findUnicaColecao,
     updateColecao,
-    deleteColecao
+    deleteColecao,
+    createAvaliacao
 }
