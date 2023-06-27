@@ -14,7 +14,7 @@ routerAvaliacao.post('/', async (req, res) =>{
     try{
         await Avaliacao.create(avaliacao)
 
-        res.status(201).res.redirect('/cards');
+        res.status(200).redirect('/cards')
 
     }catch (error) {
         res.status(500).json({error: error})

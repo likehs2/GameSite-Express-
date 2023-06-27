@@ -14,71 +14,80 @@
     </div>
     <img src="../imagens/logosite.png"
         style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
+
     <form action="/cadastrarColecao" method="post" id="cadastrarjogo">
     </form>
     <div class="divgeral">
-
         <div id="cards"></div>
     </div>
 </body>
 <script>
+
     console.log("ola")
     const w = document.getElementById('cards');
     const z = document.getElementById('divpaginainicial')
     const x = document.getElementById('cadastrarjogo')
 
-    async function validaUser(){
-            const response = await fetch('/users/procura/{{pass_user_login}}');
-            if (!response.ok) {
-                throw new Error('Erro ao obter os itens do banco de dados');
-            }
-            const itens = await response.json();
-            const itensHTML2 = itens.map(item => {
-                const adm_user = item.adm_user
-                const _id = item._id;
-                let actionsHTML = '';
-                if (adm_user === true) {
-                    actionsHTML = `
+    async function validaUser() {
+        const response = await fetch('/users/procura/{{pass_user_login}}');
+        if (!response.ok) {
+            throw new Error('Erro ao obter os itens do banco de dados');
+        }
+        const itens = await response.json();
+        const itensHTML2 = itens.map(item => {
+            const adm_user = item.adm_user
+            const _id = item._id;
+            let actionsHTML = '';
+
+            actionsHTML = `
                         <button id="criarDivBtn">Cadastrar Jogo</button>
                     `;
-                }
-                return `
+
+            return `
                     ${actionsHTML}
   `;
-            }).join('');
-            x.innerHTML = itensHTML2;
-        }
-            
+        }).join('');
+        x.innerHTML = itensHTML2;
+    }
+
 
     validaUser()
 
+
+
     async function preencherItens() {
+
         try {
 
-            console.log("{{rota}}")
-            console.log("passou do ponto 0")
             const response = await fetch('/colecao/buscar');
-            console.log("passou do ponto 1")
             if (!response.ok) {
                 throw new Error('Erro ao obter os itens do banco de dados');
                 console.log("passou do ponto 2")
             }
 
+            console.log("{{rota}}")
+            console.log("passou do ponto 0")
+
+            console.log("passou do ponto 1")
+
+
             const itens = await response.json();
+            aux = itens.length;
+            console.log(aux)
             console.log(itens)
             console.log("passou do ponto 3")
+
+
             const itensHTML = itens.map(item => {
                 const name_colecao = item.name_colecao;
                 const img_colecao = item.img_colecao;
                 const _id = item._id;
                 let actionsHTML = '';
-                if ("{{pass_user_login}}" === "vinicius") {
-                    actionsHTML = `
+                actionsHTML = `
                         <br>
                         <a href="/colecao/deletar/${_id}">Deletar</a>
                         <a href="/atualizarColecao?name_colecao=${name_colecao}&img_colecao=${img_colecao}&_id=${_id}">Editar</a>
                     `;
-                }
                 return `
                 <div style="width: 184px; height: 229px; margin-right: 10px; margin-left: 10px; margin-bottom: 30px; margin-top: 100px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); text-align: center; color: white;">
                     <a href = '/telaAvaliacao?img_colecao1=${img_colecao}&name_colecao1=${name_colecao}' class="card-link"><img src="${img_colecao}" alt="${name_colecao}" style="width: 184px; height: 229px; transition: width 0.5s, height 0.5s;"></a>
@@ -87,7 +96,7 @@
                 </div>
   `;
             }).join('');
-            
+
 
             w.style.display = 'flex';
             w.style.flexWrap = 'wrap';
@@ -95,13 +104,17 @@
             w.style.gap = '10px';
             w.style.display = 'flex';
             w.innerHTML = itensHTML;
-            
+
         } catch (error) {
             console.error('Erro ao obter os itens do banco de dados:', error);
         }
+
     }
 
+
     preencherItens();
+
+
 
 </script>
 

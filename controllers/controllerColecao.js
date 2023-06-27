@@ -1,15 +1,12 @@
 const Colecao = require('../models/Colecao')
 
-const createColecao = async (req, res) =>{  
-    console.log("entrou na createColecao")  
+const createColecao = async (req, res) =>{   
     const name_colecao = req.body.name_colecao
     const img_colecao = req.body.img_colecao
-    console.log(name_colecao, img_colecao + "dentro da funcao")
     const colecao ={
         name_colecao,
         img_colecao,
     }
-    console.log(colecao + "colecao dentro da funcao")
     try{
         await Colecao.create(colecao)
 
@@ -47,42 +44,20 @@ const findUnicaColecao = async (req, res) =>{
     }
 }
 
+
 const updateColecao = async (req, res) =>{
-    const id = req.params.id
     const {name_colecao, img_colecao} = req.body
 
 
     const colecao = {
         name_colecao,
-        img_colecao
+        img_colecao,        
     }
 
     try {
-        const updateColecao = await Colecao.updateOne({ _id: id })
+        const updateColecao = await Colecao.updateOne({ _id: req.params.id }, colecao)
 
-        res.status(200).json(updateColecao)
-        
-    } catch (error) {
-        res.status(500).json({ error: error})
-    }
-}
-
-const createAvaliacao = async (req, res) =>{
-    const {avaliador_colecao, mensagem_colecao, jogo_avaliacao} = req.body
-
-
-    const colecao = {
-        avaliacao_colecao: {
-            avaliador_colecao,
-            mensagem_colecao,
-        },  
-        
-    }
-
-    try {
-        const updateColecao = await Colecao.updateOne({ name_colecao: jogo_avaliacao }, colecao)
-
-        res.status(200).json(updateColecao)
+        res.status(200).json({message: 'Atualizado'})
         
     } catch (error) {
         res.status(500).json({ error: error})
@@ -92,18 +67,17 @@ const createAvaliacao = async (req, res) =>{
 
 
 const deleteColecao = async (req, res) =>{
-    const id = req.params.id
 
-    const colecao = await Colecao.findOne({ _id: id })
+    const colecao = await Colecao.findOne({ _id: req.params.id })
     if(!colecao){
-        res.status(422).json({ message: 'Usuário não encontrado!' })
+        res.status(422).json({ message: 'Colecao não encontrado!' })
         return
     }
 
     try{
-        await Colecao.deleteOne({_id: id})
+        await Colecao.deleteOne({_id: req.params.id})
 
-        res.status(200).json({ message: 'Usuário removido com sucesso' })
+        res.status(200).json({ message: 'Colecao removida com sucesso' })
     }catch(error){
         res.status(500).json({ error: error })
     }
@@ -115,6 +89,5 @@ module.exports ={
     findColecao,
     findUnicaColecao,
     updateColecao,
-    deleteColecao,
-    createAvaliacao
+    deleteColecao
 }

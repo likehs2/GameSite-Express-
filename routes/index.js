@@ -1,4 +1,4 @@
-const nodemailer = require('nodemailer')
+
 const cookieParse = require('cookie-parser')
 const session = require('express-session')
 const fs = require('fs');
@@ -30,18 +30,10 @@ module.exports = (app) => {
   const avaliacaoRoutes = require('./avaliacaoRoutes')
   app.use('/avaliacao', avaliacaoRoutes)
 
-  const transport = nodemailer.createTransport({
-    host: "smtp-mail.outlook.com",
-    port: 587,
-    secure: false,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
-    },
-    tls: {
-      rejectUnauthorized: false
-    }
-  });
+  const enviaEmailRoutes = require('./enviaEmailRoutes')
+  app.use('/enviaEmail', enviaEmailRoutes)
+
+  
 //primeira parte
   app.get('/', (req, res) => {
 
@@ -117,7 +109,15 @@ module.exports = (app) => {
   
 
   app.get('/cadastrarColecao', (req, res) => {
-    res.render("cadastrarColecao");
+    if (req.session.name_user_login) {
+      pass_user_login = req.session.name_user_login
+      rota = "/atualizarUsuario?name_user={{pass_user_login}}"
+      res.render("cadastrarColecao", { pass_user_login: pass_user_login, rota: rota });
+    } else {
+      pass_user_login = "Login";
+      res.redirect('/inicio');
+    }
+    
   })
 
   app.get('/telaAvaliacao', (req, res) => {
@@ -182,30 +182,6 @@ module.exports = (app) => {
     }
 
     res.render("atualizarUsuario", { pass_user_login: pass_user_login, rota: rota });
-  })
-
-  app.post('/enviaemail', (req, res) => {
-
-    const { name, email, _subject, message } = req.body;
-
-    // Configuração do e-mail a ser enviado
-    const mailOptions = {
-      from: 'contato.spcegames@outlook.com',
-      to: 'contato.spcegames@outlook.com',
-      subject: _subject,
-      text: `Nome: ${name}\nEmail: ${email}\nMensagem: ${message}`
-    };
-
-    // Envio do e-mail
-    transport.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(500).send('Erro ao enviar o e-mail');
-      } else {
-        console.log('E-mail enviado: ' + info.response);
-        res.send('E-mail enviado com sucesso');
-      }
-    });
   })
 
   app.post('/tecnologia', (req, res) => {
