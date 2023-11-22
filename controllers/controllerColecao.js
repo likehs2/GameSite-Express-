@@ -77,7 +77,7 @@ const deleteColecao = async (req, res) =>{
     try{
         await Colecao.deleteOne({_id: req.params.id})
 
-        res.status(200).json({ message: 'Colecao removida com sucesso' })
+        res.status(200).redirect('/cards')
     }catch(error){
         res.status(500).json({ error: error })
     }

@@ -12,9 +12,7 @@
             <a href='{{rota}}'>{{pass_user_login}}</a>
         </div>
     </div>
-    <img src="../imagens/logosite.png"
-        style="width: 90px; height: 90px; margin-left: 40px; display: block; margin-bottom:auto">
-
+    
     <form action="/cadastrarColecao" method="post" id="cadastrarjogo">
     </form>
     <div class="divgeral">
@@ -38,11 +36,12 @@
             const adm_user = item.adm_user
             const _id = item._id;
             let actionsHTML = '';
-
-            actionsHTML = `
+            if ("{{pass_user_login}}" === "vinicius") {
+                actionsHTML = `
                         <button id="criarDivBtn">Cadastrar Jogo</button>
                     `;
-
+            }
+            
             return `
                     ${actionsHTML}
   `;
@@ -83,17 +82,43 @@
                 const img_colecao = item.img_colecao;
                 const _id = item._id;
                 let actionsHTML = '';
-                actionsHTML = `
+                if ("{{pass_user_login}}" === "vinicius") {
+                    actionsHTML = `
                         <br>
                         <a href="/colecao/deletar/${_id}">Deletar</a>
                         <a href="/atualizarColecao?name_colecao=${name_colecao}&img_colecao=${img_colecao}&_id=${_id}">Editar</a>
                     `;
+                }
                 return `
-                <div style="width: 184px; height: 229px; margin-right: 10px; margin-left: 10px; margin-bottom: 30px; margin-top: 100px; border: 2px solid black; box-shadow: 10px 10px 15px rgb(0, 0, 0, 0.2); text-align: center; color: white;">
+                <div class = "card1">
                     <a href = '/telaAvaliacao?img_colecao1=${img_colecao}&name_colecao1=${name_colecao}' class="card-link"><img src="${img_colecao}" alt="${name_colecao}" style="width: 184px; height: 229px; transition: width 0.5s, height 0.5s;"></a>
                     <h3>${name_colecao}</h3>
                     ${actionsHTML}
                 </div>
+                <style>
+                    .card1{
+                        width: 184px;
+                        height: 229px;
+                        margin-right: 10px;
+                        margin-left: 10px;
+                        margin-bottom: 30px;
+                        margin-top: 100px;
+                        border-radius: 10px; /* Suaviza as bordas */
+                        padding: 5px; /* Espaçamento interno para mostrar o efeito de borda */
+                        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra */
+                        background: linear-gradient(to left, blue, transparent), linear-gradient(to right, #4CAF50, transparent);
+                        /* Aplica dois gradientes, um preto para transparente e um verde para transparente na horizontal */
+                        background-origin: border-box;
+                        background-clip: content-box, border-box;
+                        text-align: center; 
+                        color: white;
+                        transition: 0.5s;
+                    }
+
+                    .card1:hover{
+                        transform: translateY(-20px);
+                    }
+                </style>
   `;
             }).join('');
 
@@ -123,9 +148,7 @@
 <style>
     body {
 
-        background-image: url('../imagens/retro.gif');
-        background-repeat: repeat;
-        background-size: cover;
+        background-color: #CCCCCC;
         margin: 0;
         padding: 0;
         font-family: Arial, Helvetica, sans-serif;
